@@ -1,5 +1,42 @@
 # Changelog
 
+## 0.9.4 - 2025-11-18
+
+### Features
+
+* Disabled the cluster replica size validation to allow for custom cluster replica sizes on self-managed instances [#764](https://github.com/MaterializeInc/terraform-provider-materialize/pull/764)
+
+## 0.9.3 - 2025-11-17
+
+### Features
+
+* Added support for write-only `password` attribute in the `materialize_role` resource [#759](https://github.com/MaterializeInc/terraform-provider-materialize/pull/759). This allows managing role passwords without exposing them in Terraform state. The `password_wo` attribute provides write-only access to the password field.
+
+  Example usage:
+
+  ```hcl
+  resource "materialize_role" "example_role" {
+    name        = "secure_user"
+    password_wo = var.secure_password
+    superuser   = false
+  }
+  ```
+
+* Added write-only `value_wo` attribute to the `materialize_secret` resource [#757](https://github.com/MaterializeInc/terraform-provider-materialize/pull/757). This enhancement allows secrets to be managed without storing the actual secret value in Terraform state, improving security posture.
+
+  Example usage:
+
+  ```hcl
+  resource "materialize_secret" "example_secret" {
+    name     = "api_key"
+    value_wo = var.api_key_value
+  }
+  ```
+
+### Misc
+
+* Updated Terraform CLI version to 1.11.4 in Dockerfile [#757](https://github.com/MaterializeInc/terraform-provider-materialize/pull/757)
+
 ## 0.9.2 - 2025-11-6
 
 ### Features
